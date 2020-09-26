@@ -12,9 +12,6 @@ namespace Tbot.Data
         
         public static string FILE_IMAGE
             => $@"{Directory.GetCurrentDirectory()}\image";
-        
-        
-        public bool COMPUTE_ONCE = false;
 
         public string KEY_CONSUMER        = "";
         public string KEY_CONSUMER_SECRET = "";

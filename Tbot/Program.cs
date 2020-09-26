@@ -46,12 +46,6 @@ namespace Tbot
             {
                 TweetImage();
 
-                if (config.COMPUTE_ONCE)
-                {
-                    sendingTweets = false;
-                    return;
-                }
-                
                 Thread.Sleep(config.TWEET_INTERVAL);
             }
 
