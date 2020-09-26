@@ -15,8 +15,6 @@ namespace Tbot
 {
     internal class Program
     {
-        private static bool sendingTweets = true;
-        
         private static WebClient webClient;
 
         private static Config config;
@@ -40,32 +38,30 @@ namespace Tbot
         
         private static void TweetLoop()
         {
-            Console.WriteLine("~~~Initiated Bot Loop~~~");
+            Console.WriteLine("~~~ Initiated Bot Loop ~~~");
 
-            while (sendingTweets)
+            while (true)
             {
                 TweetImage();
 
                 Thread.Sleep(config.TWEET_INTERVAL);
             }
-
-            Console.WriteLine("~~~Terminated Bot Loop~~~");
         }
         
         private static void TweetImage()
         {
-            Console.WriteLine("~Initiating new tweet~");
+            Console.WriteLine("~ Initiating new tweet ~");
 
             var imageData = GetImage();
             if (imageData.file_url == null)
             {
-                Console.WriteLine("~Tweet failed~");
+                Console.WriteLine("! Tweet failed !");
                 return;
             }
             var imageBytes = DownloadImage( imageData.file_url );
 
-            var imageSource = (string.IsNullOrEmpty(imageData.source) ? "Not provided." : imageData.source);
-            var tweetText = $"Source: {imageSource}";
+            var imageSource = (string.IsNullOrEmpty(imageData.source) ? ("Not provided.") : (imageData.source));
+            var tweetText  = $"Source: {imageSource}";
             var tweetMedia = Upload.UploadBinary(imageBytes);
             
             Console.WriteLine("Uploading tweet...");
@@ -74,7 +70,7 @@ namespace Tbot
                 Medias = new List<IMedia>() { tweetMedia }
             });
             
-            Console.WriteLine("~Tweet sent~");
+            Console.WriteLine("~ Tweet sent ~");
         }
         
         private static byte[] DownloadImage(string _imageUrl)
@@ -109,9 +105,7 @@ namespace Tbot
             Console.WriteLine($"Found for {json}");
 
             var imageData = JsonHelper.ConvertJsonToImageData(json);
-            if (imageData.Length <= 0) return new JsonHelper.ImageData();
-
-            return imageData[ random.Next(0, imageData.Length - 1) ];
+            return (imageData.Length <= 0 ? (new JsonHelper.ImageData()) : (imageData[ random.Next(0, imageData.Length - 1) ]));
         }
         
         #endregion

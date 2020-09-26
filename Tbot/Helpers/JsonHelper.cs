@@ -11,15 +11,9 @@ namespace Tbot.Helpers
         }
 
         public static ImageData[] ConvertJsonToImageData(string _json)
-        {
-            var imageData = DeserializeJson<ImageData[]>(_json);
-            
-            return imageData;
-        }
+            => DeserializeJson<ImageData[]>(_json);
 
         private static T DeserializeJson<T>(string _json)
-        {
-            return JsonConvert.DeserializeObject<T>(_json);
-        }
+            => JsonConvert.DeserializeObject<T>(_json);
     }
 }
